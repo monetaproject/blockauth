@@ -4,6 +4,12 @@ BlockAuth provides a way for individuals to control their identity.
 
 It is an extremely early working prototype that provides a way for users to self-manage their own registrations and authenticate with other services without being forced to provide an email address whilst also allowing the individual to choose just how much of their identity they reveal in the process.
 
+__TODO:__
+
+* API needs OP_RETURN decode functionality
+* Need to add a way for adding your own return_address
+* Add addresses for all eight chains (to config.ini)
+
 ## The Specification
 
 The specfication is changing on a daily, sometimes hourly basis and has been opened to thepublic as early as possible in the hope of getting more people involved in the idea.
