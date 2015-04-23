@@ -36,7 +36,8 @@ var blockauth = {
         $('a.bs-auth-login').on('click', function(e)
         {
             e.preventDefault();
-            $('#default-modal').modal('show');
+            $('#modal-details').modal('hide');
+            $('#modal-login').modal('show');
         });
         $('a.toggler').on('click', function(e)
         {
@@ -62,11 +63,11 @@ var blockauth = {
     },
     details: function(txid, uid, chain)
     {
-        $.fn.blockstrap.core.modals('close_all');
+        $('#default-modal').modal('hide');
         $('#modal-details .txid').text(txid);
         $('#modal-details .uid').text(uid);
         $('#modal-details .chain').text(chain);
-        $('#modal-details .dnkey').text('dnkey-txid-doget-'+uid+'='+txid);
+        $('#modal-details .dnkey').text('dnkey-blockauth-'+chain+'='+uid+'_'+txid);
         $('#modal-details').modal('show');
     },
     forms: function()
@@ -87,13 +88,16 @@ var blockauth = {
                 ){
                     $.each(results.dnkeys, function(k, v)
                     {
-                        if(k.substring(0, 5) == 'txid-')
+                        if(k.substring(0, 'blockauth-'.length) == 'blockauth-')
                         {
-                            var txid = v[0];
+                            var res = v[0];
+                            var r_array = res.split('_');
                             var v_array = k.split('-');
+                            var uid = r_array[0];
                             var chain = v_array[1];
-                            var uid = v_array[2];
-                            var password = bitcoin.crypto.sha256(uid+pw).toString('hex');
+                            var txid = r_array[1];
+                            var pass = bitcoin.crypto.sha256(pw).toString('hex');
+                            var password = bitcoin.crypto.sha256(uid+pass).toString('hex');
                             
                             $.fn.blockstrap.api.transaction(txid+'?showtxnio=1', chain, function(tx)
                             {
@@ -117,11 +121,14 @@ var blockauth = {
                                             var typed_password = password.substr(0, pw_length);
                                             var title = 'Error';
                                             var content = 'The credentials do not appear to match!';
+                                            $('#modal-login').modal('hide');
                                             $('#default-modal').modal('hide');
                                             if(typed_password && pw_to_check && pw_to_check == typed_password)
                                             {
                                                 title = 'Success';
                                                 content = 'Welcome back <strong>'+name+'</strong>';
+                                                $('#modal-login').modal('hide');
+                                                $('#default-modal').modal('hide');
                                                 $.fn.blockstrap.core.modal(title, content, 'modal');
                                                 createCookie('BCAUTH', $('body').attr('data-cookie'), 1);
                                                 createCookie('BCAUTH_NAME', name, 1);
@@ -148,7 +155,8 @@ var blockauth = {
                     var chain = $($this).find('select[name="chain"]').val();
                     var uid = $($this).find('input[name="username"]').val();
                     var txid = $($this).find('input[name="txid"]').val();
-                    var password = bitcoin.crypto.sha256(uid+pw).toString('hex');
+                    var pass = bitcoin.crypto.sha256(pw).toString('hex');
+                    var password = bitcoin.crypto.sha256(uid+pass).toString('hex');
                     
                     $.fn.blockstrap.api.transaction(txid+'?showtxnio=1', chain, function(tx)
                     {
@@ -174,6 +182,7 @@ var blockauth = {
                                         var typed_password = password.substr(0, pw_length);
                                         var title = 'Error';
                                         var content = 'The credentials do not appear to match!';
+                                        $('#modal-login').modal('hide');
                                         $('#default-modal').modal('hide');
                                         if(typed_password && pw_to_check && pw_to_check == typed_password)
                                         {
@@ -200,6 +209,7 @@ var blockauth = {
                         {
                             var title = 'Error';
                             var content = 'The credentials do not appear to match!';
+                            $('#modal-login').modal('hide');
                             $('#default-modal').modal('hide');
                             $.fn.blockstrap.core.modal(title, content, 'modal');
                             $(button).removeClass('loading');

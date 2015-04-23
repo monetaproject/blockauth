@@ -115,6 +115,7 @@
                id="verification-address" 
                class="loading form-control" 
                readonly="readonly" 
+               autocomplete="off"
         />
 
         <hr>
@@ -132,7 +133,7 @@
     <script src="{{src}}"></script>
 {{/js}}
     
-<div id="default-modal" class="modal fade">
+<div id="modal-login" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -175,6 +176,21 @@
     </div>
 </div>
     
+<div id="default-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">/h4>
+            </div>
+            <div class="modal-body no-footer"></div>
+        </div>
+    </div>
+</div>
+    
 <div id="modal-details" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -196,6 +212,9 @@
                 <code class="dnkey"></code>
                 <hr>
                 <p>Adding the above entry to the <strong>bob.dnkey.org</strong> DNS TXT record will then make <strong>bob.dnkey.org</strong> your username - replacing the need to remember your UID, PWID &amp; Chain.</p>
+                
+                <hr>
+                <a href="#" class="btn btn-block btn-success bs-auth-login">TEST THE LOGIN PROCESS</a>
             </div>
         </div>
     </div>
