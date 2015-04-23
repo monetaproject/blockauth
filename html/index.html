@@ -12,6 +12,19 @@
 </head>
 <body data-cookie="{{vars.cookie}}">
     
+{{^auth.logged_in}}
+    
+    <div class="container section">
+        <h1 class="logo">{{id}}</h1>
+        <h2 class="byline">{{byline}}</h2>
+    </div>
+    
+    <div class="container">
+        {{{docs}}}
+    </div>
+    
+{{/auth.logged_in}}
+    
 <div class="container section">
     <h1 class="logo">{{id}}</h1>
     <h2 class="byline">{{byline}}</h2>
