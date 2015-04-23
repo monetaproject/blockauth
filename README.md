@@ -4,7 +4,7 @@ BlockAuth provides a way for any individual to register their identity on a Bloc
 
 BlockAuth allows users and site owners to verify an identity without the need for an email address or other data you may wish to keep private. How much (or how little) of your identity you wish to reveal is up to you. 
 
-As BlockAuth is still in beta we would extremely appreciate your feedback and contributions to improving the specification - as well as your understanding that this current beta prototype is not reflective of the final service or its potential. All of our code is open source and available to view, pull, and edit via our [public GitHub repository](https://github.com/Neuroware-IO/blockauth). Bug fixes and contributions from the community are very much welcomed. 
+BlockAuth is currently in an early beta state so would appreciate your feedback and contributions to improve the specification - as well as your understanding that this current prototype is not reflective of the final service or its potential. The code is open source and available to view, pull, and edit via our [public GitHub repository](https://github.com/Neuroware-IO/blockauth). Bug fixes and contributions from the community are very much welcomed. 
 
 ## How it Works
 
