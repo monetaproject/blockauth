@@ -102,7 +102,7 @@ Adding the above record to the DNS TXT record for `your-name.your-domain.com` se
 
 #### Authenticatin Specifications
 
-If the client support DN-Keys, all you need to input is as follows:
+If the client support [DN-Keys](http://dnkey.org), all you need to input is as follows:
 
 * DN-Key
 * Password
