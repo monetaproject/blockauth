@@ -120,7 +120,7 @@ The PWID is the transaction containing the credentials.
 
 Looking it up via an [API](http://api.blockstrap.com/v0/doget/transaction/id/57068f4ffba9f08308ef2c2728f425233a68c11199e872336232d2a08e6a4e8f?showtxnio=1&prettyprint=1) should result in seeing outputs similar to the following:
 
-<!--pre-javscript-->
+<!--pre-javascript-->
 ```
 outputs: [
     {
