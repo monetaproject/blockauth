@@ -114,6 +114,49 @@ If the client does not support DN-Keys, the required fields (otherwise ascertain
 * Blockchain Used
 * Password
 
+The DN-Key also contains the UID, PWID and Blockchain Used.
+
+The PWID is the transaction containing the credentials.
+
+Looking it up via an [API](http://api.blockstrap.com/v0/doget/transaction/id/57068f4ffba9f08308ef2c2728f425233a68c11199e872336232d2a08e6a4e8f?showtxnio=1&prettyprint=1) should result in seeing outputs similar to the following:
+
+<!--pre-javscript-->
+```
+outputs: [
+    {
+        pos: 0,
+        script_pub_key: "76A9145EBC3C0FF4955F96E3F4940B0749CCEAA1E5186888AC",
+        pubkey_hash: "5EBC3C0FF4955F96E3F4940B0749CCEAA1E51868"
+    },
+    {
+        pos: 1,
+        script_pub_key: "6A4C4F7B226E223A224D61726B20536D616C6C6579222C227077223A22333736643762626261386266386563613736333235623135316164623739666135343730643635653364333465383132373837227D",
+        pubkey_hash: null
+    }
+]
+```
+
+Please notice the `script_pub_key` on line 09. When decoded, it reads:
+
+<!--pre-html-->
+```
+OP_RETURN 7b226e223a224d61726b20536d616c6c6579222c227077223a22333736643762626261386266386563613736333235623135316164623739666135343730643635653364333465383132373837227d
+```
+
+When the hex value following the OP_RETURN is decoded, you should find the following JSON:
+
+<!--pre-javascript-->
+```
+{
+    n: "Mark Smalley",
+    pw: "376d7bbba8bf8eca76325b151adb79fa5470d65e3d34e812787"
+}
+```
+
+The current capacity for this method is 80 Bytes, which is __fully__ utilized by the current implementation.
+
+This restriction of 80 bytes applies to blockchains from Bitcoin, Litecoin, Dogecoin and DashPay.
+
 ## Examples & Demos
 
 Please note that if you are visting this documentation from [blockauth.org](http://blockauth.org) there is a basic example that can be seen working below, which is also included within the [public repo](https://github.com/Neuroware-IO/blockauth) that powers this website. The documentation seen on [blockauth.org](http:/blockauth.org) is the same README-powered documentation seen within the public [GitHub](https://github.com/Neuroware-IO/blockauth) repository.
