@@ -62,14 +62,21 @@ CONTENT
     padding: 15px 30px;
     border-radius: 4px;
 }
-.container h2 {
+.container h2, 
+.container h4 {
     display: block;
     text-align: center;
     font-size: 24px;
     padding-bottom: 10px;
-    margin-bottom: 15px;
+    margin: 30px 0;
     color: #B22C00;
     border-bottom: 2px dotted #CCC;
+}
+.container h4 {
+    text-align: left;
+    font-size: 17px;
+    margin: 15px 0;
+    border-bottom: 1px dotted #CCC;
 }
 .container h2.byline {
     display: block;
