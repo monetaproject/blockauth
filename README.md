@@ -10,13 +10,109 @@ The specfication is changing on a daily, sometimes hourly basis and has been ope
 
 #### Registration Specifications
 
-Coming soon!
+The following fields are required for registration:
+
+* __Display Name__ (this is stored publicly in the blockchain and can be called by external services later)
+* __Username__ (a SHA256 of this is sent to the server to be used for to help form the `uid`)
+* __Password__ (a SHA256 of this is sent to the server to be used with the `uid` to further SHA256 the password)
+
+The folloeing fields are optional:
+
+* Blockchain (choose which blockchain you want to record the encoded message)
+
+On the server side, the following then occurs:
+
+* __UID__ = Additional SHA256(user_salt + hashed_username)
+* __PASSWORD__ = Additional SHA256(UID + hashed_password)
+* __ADDRESS HASH__ = Additional SHA256(address_salt + UID + PASSWORD)
+
+The server should return a JSON object as follows:
+
+<!--pre-javascript-->
+```
+{
+    hash: "ADDRESS_HASH",
+    address: "DEFAULT_RETURN_ADDRESS_SET_BY_CONFIG"
+}
+```
+
+Please note that the salts for the demo below are currently set as follows:
+
+<!--pre-javascript-->
+```
+{
+    cookie: 123,
+    username: 456,
+    address: 789
+}
+```
+
+This provides flexibility and some form of future-proofing to either allow for different version numbers of specifications and (or) external services to force indepednent registrations. Since the salts are server side, they are theoretically difficult to obtain and make brute force upon the password much more difficult.
+
+Wish the hash obtained, we can use this client-side to generate a new address and then periodically poll that address to ascertain whether it has any unspent transactions, the moment it does, all of the balance is returned to the appropriate address and the login credentials are encoded into the `op_return` for that transaction.
+
+The private key belonging to the newly generated address is used to further hash the UID:
+
+<!--pre-javascript-->
+```
+var uid = bitcoin.crypto.sha256(private_key + uid).toString('hex');
+```
+
+The final `uid` is then used to hash the password prior to it being encoded in the `op_return`:
+
+<!--pre-javascript-->
+```
+var stored_password = bitcoin.crypto.sha256(uid + password).toString('hex');
+```
+
+The UID should be returned to the user and a JSON string added to the `op_return` as follows:
+
+<!--pre-javascript-->
+```
+{
+    "n": "DISPLAY_NAME",
+    "pw": "PASSWORD_TRIMMED_TO_FIT_OP_LIMIT"
+}
+```
+
+Please note that the length of the final password stored is dependent upon the length of the display name stored.
+
+Once the transaction has been completed, the relevant TXID should also be returned to the user along with the UID and (optional) relevant blockchain as follows:
+
+* __UID__ = 86e0ae3dfc5adf865b8ddbfe669fee1d2916ddda3e28ce83ed3ca489a0b6fd4b
+* __PWID__ (The Transaction ID) = 57068f4ffba9f08308ef2c2769f425233a68c11199e872336232d2a08e6a4e8f
+* __CHAIN__ = doget (representing Dogecoin Testnet)
+
+If remembering a UID and PWID (on-top of the actual password) is too much, you can choose to use [DN-Keys](http://dnkey.org), which allow you to simply remember a username and password, but by doing so publicly via DNS TXT records you also reveal slightly more about who you are in the process.
+
+-----
+
+#### DN-Key Specifications
+
+A registration process that supports DN-Keys should also return something similar to this:
+
+<!--pre-html-->
+```
+dnkey-blockauth-doget=86e0ae3dfc5adf865b8ddbfe669fee1d2916ddda3e28ce83ed3ca489a0b6fd4b_57068f4ffba9f08308ef2c2769f425233a68c11199e872336232d2a08e6a4e8f
+```
+
+Adding the above record to the DNS TXT record for `your-name.your-domain.com` sets that as your username. Having a username allows you to replace the need for remembering the UID and PWID and simply remember your sub-domain instead, which could be as simple as `bob.dnkey.me` for example.
 
 -----
 
 #### Authenticatin Specifications
 
-Coming soon!
+If the client support DN-Keys, all you need to input is as follows:
+
+* DN-Key
+* Password
+
+If the client does not support DN-Keys, the required fields (otherwise ascertained from the DN-Key results) are as follows:
+
+* UID
+* PWID (transaction ID containing credentials)
+* Blockchain Used
+* Password
 
 ## Examples & Demos
 

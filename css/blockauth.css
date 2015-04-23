@@ -152,6 +152,12 @@ form.bs-login select {
 SNIPPETS
 
 */
+.container .sh_ide-eclipse .sh_sourceCode {
+    background: #FFFFEE;
+}
+.container.section .sh_ide-eclipse .sh_sourceCode {
+    background: #FFFFFF;
+}
 .sh_ide-eclipse .sh_sourceCode a.sh_url {
     color: #333;
 }
