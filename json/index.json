@@ -7,6 +7,9 @@
             "href": "css/bootstrap.css"
         },
         {
+            "href": "css/snippet.css"
+        },
+        {
             "href": "css/blockauth.css"
         }
     ],
@@ -16,6 +19,9 @@
         },
         {
             "src": "js/bootstrap.min.js"
+        },
+        {
+            "src": "js/snippet.js"
         },
         {
             "src": "js/blockauth.js"

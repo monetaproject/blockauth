@@ -11,6 +11,7 @@ error_reporting(-1);
 
 $php_base = dirname(__FILE__);
 $docs = file_get_contents($php_base.'/README.md');
+$details = file_get_contents($php_base.'/docs/blockauth-tx-details.md');
 $template = file_get_contents($php_base.'/html/index.html');
 $options = json_decode(file_get_contents($php_base.'/json/index.json'), true);
 
@@ -24,8 +25,8 @@ $auth = new blockauth();
 $options['auth'] = $auth->user();
 $options['vars'] = $auth::$vars;
 
-$documentation = $md->parse($docs);
-$options['docs'] = $documentation;
+$options['docs'] = $md->parse($docs);
+$options['details'] = $md->parse($details);
 
 $mustache = new MustachePHP();
 $html = $mustache->render($template, $options);

@@ -41,7 +41,15 @@
         </span>
     
         <p>This is meant as an example to get you started.</p>
-        <p>Please <a href="#" class="bs-auth-logout">logout</a> to try again or register new credentials.</p>
+        <p>Please <a href="#" class="bs-auth-logout btn btn-danger btn-xs">LOGOUT</a> to try the process again or to register new credentials.</p>
+        
+        <br />
+        <div class="container" style="text-align: left;">
+            {{{details}}}
+        </div>
+        <br />
+    
+        <p>Please <a href="#" class="bs-auth-logout btn btn-danger btn-xs">LOGOUT</a> to try the process again or to register new credentials.</p>
     
     {{/auth.logged_in}}
     {{^auth.logged_in}}
@@ -80,7 +88,7 @@
             <form class="bs-auth row">
                 
                 <p>It is is now possible to authenticate who you are using the blockchain.</p>
-        <p>If you already have an account, please use it to <a href="#" class="bs-auth-login">login</a>, otherwise you can  register new credentials below:</p>
+        <p>If you have already registered an account, please use it to <a href="#" class="bs-auth-login btn btn-success btn-xs">LOGIN</a> - otherwise you can  register new credentials below:</p>
         <p>The display name is stored publicly and used within the website as your identity, whereas the username is hashed and used as a salt to hash your password.</p>
                 
                 <div class="col-sm-2 wrapper">

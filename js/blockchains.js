@@ -69,6 +69,7 @@
     {
         var str = '';
         var op_return = bitcoin.Script.fromHex(script_pub_key).toASM();
+        console.log('op_return', op_return);
         var op_array = op_return.split('OP_RETURN ');
         if(blockstrap_functions.array_length(op_array) == 2)
         {

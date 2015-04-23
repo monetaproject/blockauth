@@ -7,6 +7,9 @@ It is an extremely early working prototype that provides a way for users to self
 __TODO:__
 
 * API needs OP_RETURN decode functionality
+* Improve login access from homepage
+* Remove the manual GET process of the registration form
+* Include a sample of what is happening once you have logged-in
 * Need to add a way for adding your own return_address
 * Add addresses for all eight chains (to config.ini)
 

@@ -146,3 +146,17 @@ form.bs-login select {
     margin: 5px 0;
     background: #FFFFEE;
 }
+
+/*
+
+SNIPPETS
+
+*/
+.sh_ide-eclipse .sh_sourceCode a.sh_url {
+    color: #333;
+}
+.sh_ide-eclipse .sh_sourceCode a.sh_url:hover {
+    background: #333;
+    color: #FFF;
+    border-color: #333;
+}
