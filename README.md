@@ -85,7 +85,7 @@ Once the transaction has been completed the relevant `TXID` should also be retur
 
 -----
 
-## Introducing DN-Keys
+#### DN-Key Specifications
 
 If remembering a `UID` and `PWID` (on-top of the actual password) is too much you can choose to use [DN-Keys](http://dnkey.org), which allow you to simply remember a username and password instead. By using publically available DNS TXT records you will reveal slightly more about who you are in the process, however, offer a new way for site owners to prove ownership of their address.
 
@@ -157,7 +157,9 @@ The current capacity for this method is 80 bytes which is the current __maximum_
 
 This restriction of 80 bytes applies to the Bitcoin, Litecoin, Dogecoin and DashPay blockchains. Other blockchains with less restrictions would allow for additional features. 
 
-####__Why do we require a `UID` and `PWID`?__
+-----
+
+#### Why do we require a UID and PWID?
 
 The hashed password that is stored on the blockchain uses the `UID` as part of the hashing process, so you can't have that saved in the same location as the encoded transaction, else its at risk of random brute-forcing on any encoded transactions found. The use of the DN-Key allows you to store the `UID` in the same place that a reference to the hashed password can be found. Although this makes the process of remembering your credntials much easier, replacing the `UID` and `PWID` with a simple username also exposses the link between the `UID` and password.
 
