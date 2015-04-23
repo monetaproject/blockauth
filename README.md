@@ -25,4 +25,6 @@ Please note that if you are visting this documentation from [blockauth.org](http
 
 ## Caveats
 
-And then?
+This is extremely experiemental stuff that should not yet be used in production.
+
+Over the coming days, we will list all known flaws.
