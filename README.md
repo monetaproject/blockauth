@@ -159,7 +159,7 @@ This restriction of 80 bytes applies to blockchains from Bitcoin, Litecoin, Doge
 
 __You may be asking why we require a UID and PWID...?__
 
-The hashed password that is stored on the blockchain uses the UID as part of the hashing process, so do not want to have that saved in the same location as the encoded transaction, else it would be possible to randomly brute-force any encoded transactions found. The use of the DN-Key allows you to store the UID in the same place that a reference to the hashed password can be found. However, although this makes the process of remembering your credntials much easier, replacing the UID and PWID with a simple username, it also exposses the link between the UID and password.
+The hashed password that is stored on the blockchain uses the UID as part of the hashing process, so do not want to have that saved in the same location as the encoded transaction, else it would be possible to randomly brute-force any encoded transactions found. The use of the DN-Key allows you to store the UID in the same place that a reference to the hashed password can be found. However, although this makes the process of remembering your credntials much easier, replacing the UID and PWID with a simple username also exposses the link between the UID and password.
 
 We are working on a new version of the specification, which will leave this attack vector less vulnerable.
 
