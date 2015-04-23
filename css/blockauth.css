@@ -51,11 +51,11 @@ HEADERS
 h1.logo {
     display: block;
     position: relative;
-    width: 200px;
-    height: 60px;
+    width: 350px;
+    height: 140px;
     text-indent: -999em;
-    background: url(../img/logo.png) no-repeat;
-    left: 50%;
+    background: url(../img/blockauthlogo.png) no-repeat;
+    left: 44%;
     margin: 20px 0 5px -100px;
 }
 
