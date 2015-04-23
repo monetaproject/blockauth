@@ -20,11 +20,12 @@ outputs: [
 
 Please notice the `script_pub_key` on line 09. When decoded, it reads:
 
+<!--pre-html-->
 ```
 OP_RETURN 7b226e223a224d61726b20536d616c6c6579222c227077223a22333736643762626261386266386563613736333235623135316164623739666135343730643635653364333465383132373837227d
 ```
 
-When the hex value preceeding the OP_RETURN is decoded, you should find the following JSON:
+When the hex value following the OP_RETURN is decoded, you should find the following JSON:
 
 <!--pre-javascript-->
 ```
@@ -34,6 +35,6 @@ When the hex value preceeding the OP_RETURN is decoded, you should find the foll
 }
 ```
 
-The current capacity for thos method is 80 Bytes and is __fully__ utilized above.
+The current capacity for this method is 80 Bytes, which is __fully__ utilized by the current implementation.
 
-This same restriction of 80 bytes applies to Bitcoin, Litecoin, Dogecoin and DashPay.
+This restriction of 80 bytes applies to blockchains from Bitcoin, Litecoin, Dogecoin and DashPay.
