@@ -6,10 +6,7 @@ It is an extremely early working prototype that provides a way for users to self
 
 __TODO:__
 
-* API needs OP_RETURN decode functionality
-* Improve login access from homepage
 * Remove the manual GET process of the registration form
-* Include a sample of what is happening once you have logged-in
 * Need to add a way for adding your own return_address
 * Add addresses for all eight chains (to config.ini)
 
@@ -36,3 +33,7 @@ Please note that if you are visting this documentation from [blockauth.org](http
 This is extremely experiemental stuff that should not yet be used in production.
 
 Over the coming days, we will list all known flaws.
+
+More infomration can be seen within the following additional README files:
+
+* [BlockAuth Transaction Details](https://github.com/Neuroware-IO/blockauth/blob/master/docs/blockauth-tx-details.md)

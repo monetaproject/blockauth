@@ -58,72 +58,70 @@
             YOU ARE NOT LOGGED-IN
         </span>
     
-        {{#vars.hashes}}
-    
-            <form class="bs-payment-required">
-                
-                <p>In order to activate your account, you will need to send at least <span class="minimum" data-chain="{{vars.chain}}"></span> to the following address:</p>
-                
-                <input 
-                       type="text" 
-                       class="verification-address loading form-control" 
-                       data-chain="{{vars.chain}}"
-                       data-name="{{vars.name}}"
-                       data-uid="{{vars.uid}}"
-                       data-pw="{{vars.pw}}"
-                       data-hash="{{address}}"
-                       data-return="{{vars.return_address}}"
-                       readonly="readonly" 
-                />
-                
-                <hr>
-                <p>Please ensure that you keep this window open until payment has been made, as the necessary activation codes will be provided here open confirming receipt.</p>
-                <p>A transaction will be sent back to the routing address from configuration containing the encoded password and any change sent to the above address.</p>
-                
-            </form>
-    
-        {{/vars.hashes}}
-        {{^vars.hashes}}
-    
-            <form class="bs-auth row">
-                
-                <p>It is is now possible to authenticate who you are using the blockchain.</p>
-        <p>If you have already registered an account, please use it to <a href="#" class="bs-auth-login btn btn-success btn-xs">LOGIN</a> - otherwise you can  register new credentials below:</p>
-        <p>The display name is stored publicly and used within the website as your identity, whereas the username is hashed and used as a salt to hash your password.</p>
-                
-                <div class="col-sm-2 wrapper">
-                    <input type="text" name="name" placeholder="Display Name" class="form-control" autocomplete="off" />
-                </div>
-                <div class="col-sm-2 wrapper">
-                    <input type="text" name="username" placeholder="Username" class="form-control" autocomplete="off" />
-                </div>
-                <div class="col-sm-2 wrapper">
-                    <input type="password" name="password" placeholder="Your Password" class="form-control" autocomplete="off" />
-                </div>
-                <div class="col-sm-2 wrapper">
-                    <input type="password" name="password-repeat" placeholder="Repeat Password" class="form-control" autocomplete="off" />
-                </div>
-                <div class="col-sm-2 wrapper">
-                    <select name="chain" class="form-control" autocomplete="off">
-                        <option value="">Chain</option>
-                        <option value="btc">Bitcoin</option>
-                        <option value="dash">DashPay</option>
-                        <option value="doge">Dogecoin</option>
-                        <option value="ltc">Litecoin</option>
-                        <option value="btct">Bitcoin Testnet</option>
-                        <option value="dasht">DashPay Testnet</option>
-                        <option value="doget">Dogecoin Testnet</option>
-                        <option value="ltct">Litecoin Testnet</option>
-                    </select>
-                </div>
-                <div class="col-sm-2 wrapper">
-                    <button type="submit" class="btn btn-success btn-block">Register</button>
-                </div>
-            </form>
-    
-        {{/vars.hashes}}
+        <form class="bs-auth row">
+
+            <p>It is is now possible to authenticate who you are using the blockchain.</p>
+    <p>If you have already registered an account, please use it to <a href="#" class="bs-auth-login btn btn-success btn-xs">LOGIN</a> - otherwise you can  register new credentials below:</p>
+    <p>The display name is stored publicly and used within the website as your identity, whereas the username is hashed and used as a salt to hash your password.</p>
+
+            <div class="col-sm-2 wrapper">
+                <input type="text" name="name" placeholder="Display Name" class="form-control" autocomplete="off" />
+            </div>
+            <div class="col-sm-2 wrapper">
+                <input type="text" name="username" placeholder="Username" class="form-control" autocomplete="off" />
+            </div>
+            <div class="col-sm-2 wrapper">
+                <input type="password" name="password" placeholder="Your Password" class="form-control" autocomplete="off" />
+            </div>
+            <div class="col-sm-2 wrapper">
+                <input type="password" name="password-repeat" placeholder="Repeat Password" class="form-control" autocomplete="off" />
+            </div>
+            <div class="col-sm-2 wrapper">
+                <select name="chain" class="form-control" autocomplete="off">
+                    <option value="">Chain</option>
+                    <option value="btc">Bitcoin</option>
+                    <option value="dash">DashPay</option>
+                    <option value="doge">Dogecoin</option>
+                    <option value="ltc">Litecoin</option>
+                    <option value="btct">Bitcoin Testnet</option>
+                    <option value="dasht">DashPay Testnet</option>
+                    <option value="doget">Dogecoin Testnet</option>
+                    <option value="ltct">Litecoin Testnet</option>
+                </select>
+            </div>
+            <div class="col-sm-2 wrapper">
+                <button type="submit" class="btn btn-success btn-block">Register</button>
+            </div>
+
+            <p class="clearfix"></p>
+            <p>You may also select your own return address to use for sending the transaction that codes the registration credentials to a wallet of your choice.</p>
+            <p>However, please note that in doing so, you are leaving one more trail regarding the true identity of the credentials.</p>
+
+            <input type="text" name="address" placeholder="Optional return address to send back credential transaction" class="form-control" autocomplete="off"
+
+        </form>
     
     {{/auth.logged_in}}
+</div>
+    
+<div id="payment-form" class="hidden">
+    <form class="bs-payment-required">
+
+        <p>In order to activate your account, you need to send at least <span class="minimum"></span> (twice the minimg fee so we can send the required encoded transaction) to the following address:</p>
+
+        <hr>
+        <input 
+               type="text" 
+               id="verification-address" 
+               class="loading form-control" 
+               readonly="readonly" 
+        />
+
+        <hr>
+        <p>Please ensure that you keep this window open until payment has been made, as the necessary activation codes will be provided here open confirming receipt.</p>
+        <p>A transaction will be sent back to the supplied address containing the encoded crednetials, but if would prefer to leave no trace of the transaction leading back to you, please ensure you have left the return address field blank and the transaction will get sent to the address supplied in the configuration file instead.</p>
+
+    </form>
 </div>
     
 <div class="container section">

@@ -23,13 +23,13 @@ function eraseCookie(name) {
 	createCookie(name,"",-1);
 }
 
-var bs_auth = {
+var blockauth = {
     // INITIALIZE
     init: function()
     {
-        bs_auth.buttons();
-        bs_auth.snippets();
-        bs_auth.forms();
+        blockauth.buttons();
+        blockauth.snippets();
+        blockauth.forms();
     },
     buttons: function()
     {
@@ -70,30 +70,6 @@ var bs_auth = {
     },
     forms: function()
     {
-        var address = $('.verification-address.loading');
-        if($(address).length > 0)
-        {
-            var hash = $(address).attr('data-hash');
-            var chain = $(address).attr('data-chain');
-            var uid = $(address).attr('data-uid');
-            var keys = $.fn.blockstrap.blockchains.keys(hash, chain);
-            
-            // PUBLISH ADDRESS AS EARLY AS POSSIBLE
-            $(address).val(keys.pub).removeClass('loading');
-            
-            // COLLECT AND SEND VARS TO POLL
-            var name = $(address).attr('data-name');
-            var password = $(address).attr('data-pw');
-            var return_address = $(address).attr('data-return');
-            bs_auth.timeout(name, password, keys, return_address, chain, uid, 1);
-        }
-        $('.minimum').each(function()
-        {
-            var chain = $(this).attr('data-chain');
-            var blockchain = $.fn.blockstrap.settings.blockchains[chain].blockchain;
-            var fee = $.fn.blockstrap.settings.blockchains[chain].fee * 200000000;
-            $(this).text((fee / 100000000)+' '+blockchain);
-        });
         $('form.bs-login').on('submit', function(e)
         {
             e.preventDefault();
@@ -231,6 +207,74 @@ var bs_auth = {
                 }
             });
         });
+        $('form.bs-auth').on('submit', function(e)
+        {
+            e.preventDefault();
+            var form = this;
+            var button = $(form).find('button[type="submit"]');
+            var address = $(form).find('input[name="address"]').val();
+            var display_name = $(form).find('input[name="name"]').val();
+            var username = $(form).find('input[name="username"]').val();
+            var password = $(form).find('input[name="password"]').val();
+            var password_repeat = $(form).find('input[name="password-repeat"]').val();
+            var blockchain = $(form).find('select[name="chain"]').val();
+            if(display_name && username && password && password_repeat && blockchain)
+            {
+                if(password != password_repeat)
+                {
+                    $.fn.blockstrap.core.modal('Warning', 'Password Mismatch');
+                }
+                else
+                {
+                    $(button).addClass('loading');
+                    var pw = bitcoin.crypto.sha256(password).toString('hex');
+                    var un = bitcoin.crypto.sha256(username).toString('hex');
+                    $.ajax({
+                        url: 'php/register.php',
+                        data: {
+                            name: display_name, 
+                            username: un, 
+                            chain: blockchain, 
+                            password: pw, 
+                            return_address: address
+                        }, 
+                        dataType: 'json',
+                        method: 'post',
+                        cache: false,
+                        success: function(obj)
+                        {
+                            var hash = false;
+                            var default_address = address;
+                            if(typeof obj.hash != 'undefined') hash = obj.hash;
+                            if(!address && typeof obj.address != 'undefined') address = obj.address;
+                            if(hash)
+                            {
+                                var bs = $.fn.blockstrap;
+                                var keys = bs.blockchains.keys(hash, blockchain);
+                                var payment_form = $('#payment-form').html();
+                                var minimum = parseFloat(bs.settings.blockchains[blockchain].fee * 100000000) * 2;
+                                var chain_name = bs.settings.blockchains[blockchain].blockchain;
+                                var uid = bitcoin.crypto.sha256(keys.priv+un).toString('hex');
+                                
+                                password = bitcoin.crypto.sha256(uid+pw).toString('hex');
+                                $.fn.blockstrap.core.modal('Please Verify Registration', payment_form);
+                                $('#default-modal').find('.minimum').text((minimum / 100000000) + ' ' +chain_name);
+                                $('#default-modal').find('#verification-address').val(keys.pub);
+                                blockauth.timeout(display_name, password, keys, address, blockchain, uid, 1);
+                            }
+                            else
+                            {
+                                $.fn.blockstrap.core.modal('Error', 'Unable to get hash');
+                            }
+                        }
+                    });
+                }
+            }
+            else
+            {
+                $.fn.blockstrap.core.modal('Warning', 'All Fields Required');
+            }
+        });
     },
     snippets: function()
     {
@@ -301,13 +345,13 @@ var bs_auth = {
                     {
                         if(typeof obj.txid != 'undefined' && obj.txid)
                         {
-                            bs_auth.details(obj.txid, uid, chain);
+                            blockauth.details(obj.txid, uid, chain);
                         }
                     });
                 }
                 else
                 {
-                    bs_auth.timeout(name, password, keys, return_address, chain, uid, 60000);
+                    blockauth.timeout(name, password, keys, return_address, chain, uid, 60000);
                 }
             });
         }, timeout);
@@ -316,7 +360,5 @@ var bs_auth = {
 
 $(document).ready(function()
 {
-    bs_auth.init();
+    blockauth.init();
 });
-
-var blockstrap_defaults = '{"install":false,"skip_config":true,"app_id":"bcauth","blockchains":{"btct":{"blockchain":"Bitcoin Testnet","lib":"bitcointestnet","apis":{"blockstrap":"https://api.blockstrap.com/v0/btct/"},"fee":0.0001,"op_return":true,"op_limit":80},"dasht":{"blockchain":"DashPay Testnet","lib":"dashpaytestnet","apis":{"blockstrap":"https://api.blockstrap.com/v0/dasht/"},"fee":0.0001,"op_return":true,"op_limit":80},"doget":{"blockchain":"Dogecoin Testnet","lib":"dogecointestnet","apis":{"blockstrap":"https://api.blockstrap.com/v0/dogt/"},"fee":1,"op_return":true,"op_limit":80},"ltct":{"blockchain":"Litecoin Testnet","lib":"litecointestnet","apis":{"blockstrap":"https://api.blockstrap.com/v0/ltct/"},"fee":0.001,"op_return":true,"op_limit":80},"multi":{"private":true,"apis":{"blockstrap":"https://api.blockstrap.com/v0/multi/"}},"btc":{"blockchain":"Bitcoin","lib":"bitcoin","apis":{"blockstrap":"https://api.blockstrap.com/v0/btc/"},"fee":0.0001,"op_return":true,"op_limit":80},"dash":{"blockchain":"DashPay","lib":"dashpay","apis":{"blockstrap":"https://api.blockstrap.com/v0/dash/"},"fee":0.0001,"op_return":true,"op_limit":80},"doge":{"blockchain":"Dogecoin","lib":"dogecoin","apis":{"blockstrap":"https://api.blockstrap.com/v0/doge/"},"fee":1,"op_return":true,"op_limit":80},"ltc":{"blockchain":"Litecoin","lib":"litecoin","apis":{"blockstrap":"https://api.blockstrap.com/v0/ltc/"},"fee":0.001,"op_return":true,"op_limit":80}},"apis":{"defaults":{"blockstrap":{"functions":{"to":{"address":"address/transactions/","addresses":"address/ids/","block":"block/height/","dnkey":"dnkey/","dnkeys":"dnkey/","market":"market/stats/","relay":"transaction/relay/","relay_param":"txn_hex","transaction":"transaction/id/","transactions":"address/transactions/$call?showtxnio=1","tx_pagination":"records, skip","unspents":"address/unspents/$call?showtxnio=1"},"from":{"address":{"key":"address","address":"address","hash":"address_hash160","tx_count":"transaction_count_total","received":"inputs_value_confirmed","balance":"balance"},"addresses":{"key":"addresses","delimiter":",","address":"address","hash":"address_hash160","tx_count":"transaction_count_total","received":"inputs_value_confirmed","balance":"balance"},"block":{"key":"blocks.0","height":"height","hash":"[id, lowercase]","prev":"[prev_block_id, lowercase]","next":"[next_block_id, lowercase]","tx_count":"tx_count","time":"time"},"dnkey":{"key":"","dnkeys":"dnkeys"},"dnkeys":{"key":"","dnkeys":"dnkeys"},"market":{"key":"market","price_usd_now":"fiat_usd_now","tx_count_24hr":"tx_count_24hr","sent_usd_24hr":"[output_value_24hr, *, fiat_usd_now, int]","sent_coins_24hr":"output_value_24hr","coins_discovered":"coinbase_value_todate","marketcap":"marketcap"},"relay":{"txid":"id","inner":""},"transaction":{"key":"transaction","txid":"[id, lowercase]","size":"size","block":"block_height","time":"time","input":"input_value","output":"output_value","value":"[output_value, -, fees, int]","fees":"fees"},"transactions":{"key":"address.transactions","txid":"[id, lowercase]","size":"size","block":"block_height","time":"time","input":"input_value","output":"output_value","value":"tx_address_ledger_value","fees":"fees"},"unspents":{"key":"address.transactions","reverse_array":true,"confirmations":"confirmations","txid":"[id, lowercase]","index":"tx_address_pos","value":"tx_address_value","script":"[tx_address_script_pub_key, lowercase]"}}}}}}}';
