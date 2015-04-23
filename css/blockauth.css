@@ -34,6 +34,14 @@ p.credits {
     height: 100%;
     background: url(../img/loading.gif) no-repeat center center;
 }
+a.btn {
+    border: 1px solid #333;
+}
+a.btn:hover {
+    background: #333;
+    color: #FFF;
+    border-color: #000;
+}
 
 /*
 

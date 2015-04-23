@@ -36,8 +36,11 @@ var blockauth = {
         $('a.bs-auth-login').on('click', function(e)
         {
             e.preventDefault();
-            $('#modal-details').modal('hide');
-            $('#modal-login').modal('show');
+            $('html, body').animate({ scrollTop: 0 }, 350, function()
+            {
+                $('#modal-details').modal('hide');
+                $('#modal-login').modal('show');
+            });
         });
         $('a.toggler').on('click', function(e)
         {
@@ -58,7 +61,10 @@ var blockauth = {
         {
             e.preventDefault();
             eraseCookie('BCAUTH');
-            location.reload();
+            $('html, body').animate({ scrollTop: 0 }, 350, function()
+            {
+                location.reload();
+            });
         });
     },
     details: function(txid, uid, chain)
@@ -68,7 +74,10 @@ var blockauth = {
         $('#modal-details .uid').text(uid);
         $('#modal-details .chain').text(chain);
         $('#modal-details .dnkey').text('dnkey-blockauth-'+chain+'='+uid+'_'+txid);
-        $('#modal-details').modal('show');
+        $('html, body').animate({ scrollTop: 0 }, 350, function()
+        {
+            $('#modal-details').modal('show');
+        });
     },
     forms: function()
     {

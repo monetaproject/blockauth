@@ -157,6 +157,12 @@ The current capacity for this method is 80 Bytes, which is __fully__ utilized by
 
 This restriction of 80 bytes applies to blockchains from Bitcoin, Litecoin, Dogecoin and DashPay.
 
+__You may be asking why we require a UID and PWID...?__
+
+Te hashed password that is stored on the blockchain uses the UID as part of the hashing process, so do not want to have that saved in the same location as the encoded transaction, else it would be possible to randomly brute-force any encoded transactions found. The use of the DN-Key allows you to store the UID in the same place that a reference to the hashed password can be found. However, although this makes the process of remembering your credntials much easy, replacing the UID and PWID with a simple username, it also exposses the link between the UID and password.
+
+We are working on a new version of the specification, which will leave this attack vector less vulnerable.
+
 ## Examples & Demos
 
 Please note that if you are visting this documentation from [blockauth.org](http://blockauth.org) there is a basic example that can be seen working below, which is also included within the [public repo](https://github.com/Neuroware-IO/blockauth) that powers this website. The documentation seen on [blockauth.org](http:/blockauth.org) is the same README-powered documentation seen within the public [GitHub](https://github.com/Neuroware-IO/blockauth) repository.
