@@ -7,7 +7,15 @@ It is an extremely early working prototype that provides a way for users to self
 
 ## The Specification
 
-And then?
+The specfication is changing on a daily, sometimes hourly basis and has been opened to thepublic as early as possible in the hope of getting more people involved in the idea.
+
+#### Registration Specifications
+
+Coming soon!
+
+#### Authenticatin Specifications
+
+Coming soon!
 
 
 ## Examples
