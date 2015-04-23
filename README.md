@@ -14,19 +14,16 @@ The following fields are required for registration:
 
 * __Display Name__ (this is stored publicly in the blockchain and can be called by external services)
 * __Username__ (a SHA256 of this is sent to the server to be used to help form the `UID`)
-* __Password__ (another SHA256 of this is sent to the server to be used with the `UID`)
+* __Password__ (a SHA256 of this is also sent to the server to be used with the `UID`)
+* __Blockchain__ (used to reference the blockchain used, which is required for authenticating)
 
-The following fields are optional:
-
-* Blockchain (currently support Bitcoin, Litecoin, Dogecoin, and DashPay blockchains, as well as their testnets)
-
-When the following is received server side:
+These fields should then be sent to the server for registration using the following process:
 
 * __UID__ = Additional SHA256 (user_salt + hashed_username)
 * __PASSWORD__ = Additional SHA256 (`UID` + hashed_password)
 * __ADDRESS HASH__ = Additional SHA256 (address_salt + `UID` + PASSWORD)
 
-It will return a JSON object as follows:
+With the salts added server-side, the client should recieve the following JSON object:
 
 <!--pre-javascript-->
 ```
@@ -87,7 +84,7 @@ Once the transaction has been completed the relevant `TXID` should also be retur
 
 #### DN-Key Specifications
 
-If remembering a `UID` and `PWID` (on-top of the actual password) is too much you can choose to use [DN-Keys](http://dnkey.org), which allow you to simply remember a username and password instead. By using publically available DNS TXT records you will reveal slightly more about who you are in the process, however, offer a new way for site owners to prove ownership of their address.
+If remembering a `UID` and `PWID` (on-top of the actual password) is too much you can choose to use [DN-Keys](http://dnkey.org), which allow you to simply remember a username and password instead. By using publically available DNS TXT records you will reveal slightly more about who you are in the process.
 
 A registration process that supports DN-Keys should also return something similar to this:
 
@@ -96,27 +93,27 @@ A registration process that supports DN-Keys should also return something simila
 dnkey-blockauth-doget=86e0ae3dfc5adf865b8ddbfe669fee1d2916ddda3e28ce83ed3ca489a0b6fd4b_57068f4ffba9f08308ef2c2769f425233a68c11199e872336232d2a08e6a4e8f
 ```
 
-Adding the above record to the DNS TXT record for `your-name.your-domain.com` sets that as your username. Having a username allows you to replace the need for remembering the `UID` and `PWID` and simply remember your sub-domain instead and actual name, which could be as simple as `bob.website.com` for example.
+Adding the above record to the DNS TXT record for `your-name.your-domain.com` sets that as your username. Having a username allows you to replace the need for remembering the `UID` and `PWID` and simply remember your sub-domain instead, which could be as simple as `bob.anything.com` for example.
 
 -----
 
 #### Authentication Specifications
 
-If the client support [DN-Keys](http://dnkey.org) all you need to input is the following:
+If the client __does not__ support DN-Keys, the required fields (otherwise ascertained from the DN-Key results) are as follows:
+
+* UID
+* PWID
+* Blockchain
+* Password
+
+If the client __does__ supports [DN-Keys](http://dnkey.org) all you need to input is the following:
 
 * DN-Key
 * Password
 
-If the client does not support DN-Keys, the required fields (otherwise ascertained from the DN-Key results) are as follows:
+The DN-Key contains the `UID`, `PWID` and selected Blockchain, e.g `btc`.
 
-* `UID`
-* `PWID` (transaction ID containing credentials)
-* Blockchain Used
-* Password
-
-The DN-Key also contains the `UID`, `PWID` and selected Blockchain, e.g `btc`.
-
-The `PWID` is the transaction containing the credentials.
+The `PWID` is the transaction ID from where the credentials are stored.
 
 Looking it up [via an API](http://api.blockstrap.com/v0/doget/transaction/id/57068f4ffba9f08308ef2c2728f425233a68c11199e872336232d2a08e6a4e8f?showtxnio=1&prettyprint=1) should result in seeing outputs similar to the following:
 
@@ -153,7 +150,7 @@ When the hex value following the OP_RETURN is decoded, you should find the follo
 }
 ```
 
-The current capacity for this method is 80 bytes which is the current __maximum__ size utilized by the current implementation.
+The current capacity for this method is 80 bytes, which is the __fuly__ utilized by the this implementation.
 
 This restriction of 80 bytes applies to the Bitcoin, Litecoin, Dogecoin and DashPay blockchains. Other blockchains with less restrictions would allow for additional features. 
 
@@ -161,7 +158,7 @@ This restriction of 80 bytes applies to the Bitcoin, Litecoin, Dogecoin and Dash
 
 #### Why do we require a UID and PWID?
 
-The hashed password that is stored on the blockchain uses the `UID` as part of the hashing process, so you can't have that saved in the same location as the encoded transaction, else its at risk of random brute-forcing on any encoded transactions found. The use of the DN-Key allows you to store the `UID` in the same place that a reference to the hashed password can be found. Although this makes the process of remembering your credntials much easier, replacing the `UID` and `PWID` with a simple username also exposses the link between the `UID` and password.
+The hashed password that is stored on the blockchain uses the `UID` as part of the hashing process, so you can't have that saved in the same location as the encoded transaction, else its at risk of random brute-forcing on any encoded transactions found. The use of the DN-Key allows you to store the `UID` in the same place that a reference to the hashed password can be found. Although this makes the process of remembering your credentials much easier, replacing the `UID` and `PWID` with a simple username also exposses the link between the `UID` and password.
 
 We are working on a new version of the specification which will leave this attack vector less vulnerable. Your ideas on making this possible are welcomed and encouraged.
 
