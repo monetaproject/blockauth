@@ -62,6 +62,7 @@ var blockauth = {
     },
     details: function(txid, uid, chain)
     {
+        $.fn.blockstrap.core.modals('close_all');
         $('#modal-details .txid').text(txid);
         $('#modal-details .uid').text(uid);
         $('#modal-details .chain').text(chain);
