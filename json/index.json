@@ -1,0 +1,48 @@
+{
+    "title": "Self-Managed Authentication via Blockchains using Blockstrap",
+    "css": [
+        {
+            "href": "css/bootstrap.css"
+        },
+        {
+            "href": "css/blockauth.css"
+        }
+    ],
+    "js": [
+        {
+            "src": "js/jquery.min.js"
+        },
+        {
+            "src": "js/bootstrap.min.js"
+        },
+        {
+            "src": "js/blockauth.js"
+        },
+        {
+            "src": "js/crypto.js"
+        },
+        {
+            "src": "js/sha3.js"
+        },
+        {
+            "src": "js/bitcoinjs-lib.js"
+        },
+        {
+            "src": "js/bs.options.js"
+        },
+        {
+            "src": "js/blockstrap.js"
+        },
+        {
+            "src": "js/blockchains.js"
+        },
+        {
+            "src": "js/api.js"
+        }
+    ],
+    "contents": "LOG-IN HERE",
+    "credits": "<a href='http://blockauth.org'>BlockAuth Specification</a> Published by <a href='http://neuroware.io'>Neuroware</a>, April 2015",
+    "analytics": {
+        "google": "XXX"
+    }
+}

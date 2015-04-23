@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<title>{{title}}</title>
+<link rel='shortcut icon' href='favicon.ico'>
+{{#css}}
+    <link href="{{href}}" rel="stylesheet">
+{{/css}}
+</head>
+<body data-cookie="{{vars.cookie}}">
+    
+<div class="container section">
+    <h1 class="logo">{{title}}</h1>
+    {{#auth.logged_in}}
+        
+        <span class="alert alert-success">
+            YOU ARE NOW LOGGED-IN
+            {{#auth.name}}
+                <br />
+                <span class="small">
+                    Welcome back {{auth.name}}
+                </span>
+            {{/auth.name}}
+        </span>
+    
+        <p>This is meant as an example to get you started.</p>
+        <p>Please <a href="#" class="bs-auth-logout">logout</a> to try again or register new credentials.</p>
+    
+    {{/auth.logged_in}}
+    {{^auth.logged_in}}
+    
+        <span class="alert alert-danger">
+            YOU ARE NOT LOGGED-IN
+        </span>
+    
+        {{#vars.hashes}}
+    
+            <form class="bs-payment-required">
+                
+                <p>In order to activate your account, you will need to send at least <span class="minimum" data-chain="{{vars.chain}}"></span> to the following address:</p>
+                
+                <input 
+                       type="text" 
+                       class="verification-address loading form-control" 
+                       data-chain="{{vars.chain}}"
+                       data-name="{{vars.name}}"
+                       data-uid="{{vars.uid}}"
+                       data-pw="{{vars.pw}}"
+                       data-hash="{{address}}"
+                       data-return="{{vars.return_address}}"
+                       readonly="readonly" 
+                />
+                
+                <hr>
+                <p>Please ensure that you keep this window open until payment has been made, as the necessary activation codes will be provided here open confirming receipt.</p>
+                <p>A transaction will be sent back to the routing address from configuration containing the encoded password and any change sent to the above address.</p>
+                
+            </form>
+    
+        {{/vars.hashes}}
+        {{^vars.hashes}}
+    
+            <form class="bs-auth row">
+                
+                <p>It is is now possible to authenticate who you are using the blockchain.</p>
+        <p>If you already have an account, please use it to <a href="#" class="bs-auth-login">login</a>, otherwise you can  register new credentials below:</p>
+        <p>The display name is stored publicly and used within the website as your identity, whereas the username is hashed and used as a salt to hash your password.</p>
+                
+                <div class="col-sm-2 wrapper">
+                    <input type="text" name="name" placeholder="Display Name" class="form-control" autocomplete="off" />
+                </div>
+                <div class="col-sm-2 wrapper">
+                    <input type="text" name="username" placeholder="Username" class="form-control" autocomplete="off" />
+                </div>
+                <div class="col-sm-2 wrapper">
+                    <input type="password" name="password" placeholder="Your Password" class="form-control" autocomplete="off" />
+                </div>
+                <div class="col-sm-2 wrapper">
+                    <input type="password" name="password-repeat" placeholder="Repeat Password" class="form-control" autocomplete="off" />
+                </div>
+                <div class="col-sm-2 wrapper">
+                    <select name="chain" class="form-control" autocomplete="off">
+                        <option value="">Chain</option>
+                        <option value="btc">Bitcoin</option>
+                        <option value="dash">DashPay</option>
+                        <option value="doge">Dogecoin</option>
+                        <option value="ltc">Litecoin</option>
+                        <option value="btct">Bitcoin Testnet</option>
+                        <option value="dasht">DashPay Testnet</option>
+                        <option value="doget">Dogecoin Testnet</option>
+                        <option value="ltct">Litecoin Testnet</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 wrapper">
+                    <button type="submit" class="btn btn-success btn-block">Register</button>
+                </div>
+            </form>
+    
+        {{/vars.hashes}}
+    
+    {{/auth.logged_in}}
+</div>
+    
+<div class="container section">
+    <p class="credits">{{{credits}}}</p>
+</div>
+    
+{{#js}}
+    <script src="{{src}}"></script>
+{{/js}}
+    
+<div id="default-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Logging-In via The Blockchains</h4>
+            </div>
+            <div class="modal-body no-footer">
+                <p>Please login using your blockchain authentication credentials:</p>
+                <form class="bs-login">
+                    <div class="extras" style="display: block;">
+                        <input type="text" name="dnkey" placeholder="DNKey (Containing Chain, UID and PWID)" class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="extras" style="display: none;">
+                        <input type="text" name="username" placeholder="UID" class="form-control" autocomplete="off" />
+                        <input type="text" name="txid" placeholder="PWID" class="form-control" autocomplete="off" />
+                        <select type="text" name="chain" placeholder="CHAIN" class="form-control" autocomplete="off">
+                            <option value="">Select Blockchain</option>
+                            <option value="btc">Bitcoin</option>
+                            <option value="dash">DashPay</option>
+                            <option value="doge">Dogecoin</option>
+                            <option value="ltc">Litecoin</option>
+                            <option value="btct">Bitcoin Testnet</option>
+                            <option value="dasht">DashPay Testnet</option>
+                            <option value="doget">Dogecoin Testnet</option>
+                            <option value="ltct">Litecoin Testnet</option>
+                        </select>
+                    </div>
+                    <input type="password" name="password" placeholder="Password" class="form-control" autocomplete="off" />
+                    <p class="clearfix">
+                        <br />
+                        <a class="btn btn-danger pull-left toggler">Do Not Have DNKey</a>
+                        <button type="submit" class="btn btn-success pull-right">Submit</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<div id="modal-details" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title">Account Details</h4>
+            </div>
+            <div class="modal-body no-footer" style="word-wrap:break-word; text-align:center;">
+                <p>Important account details that cannot be recovered:</p>
+                <p><strong>UID</strong>: <span class="uid"></span></p>
+                <p><strong>PWID</strong>: <span class="txid"></span></p>
+                <p><strong>CHAIN</strong>: <span class="chain"></span></p>
+                <hr>
+                <p>We also support DNKeys. In order to replace the above information with a simple username, please add the following information to your preferred DNS TXT record:</p>
+                <br>
+                <code class="dnkey"></code>
+                <hr>
+                <p>Adding the above entry to the <strong>bob.dnkey.org</strong> DNS TXT record will then make <strong>bob.dnkey.org</strong> your username - replacing the need to remember your UID, PWID &amp; Chain.</p>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<div id="modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button data-dismiss="modal" class="close" type="button">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body no-footer">
+                <p></p>
+            </div>
+        </div>
+    </div>
+</div>
+    
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create','{{analytics.google}}','auto');
+ga('send','pageview');
+</script>
+
+</body>
+</html>

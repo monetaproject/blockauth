@@ -8,14 +8,15 @@ Using - http://blockstrap.com
 */
 
 error_reporting(-1);
-$php_base = dirname(dirname(__FILE__));
-$template = file_get_contents($php_base.'/web/html/auth.html');
-$options = json_decode(file_get_contents($php_base.'/web/json/auth.json'), true);
+$php_base = dirname(__FILE__);
+$template = file_get_contents($php_base.'/html/index.html');
+$options = json_decode(file_get_contents($php_base.'/json/index.json'), true);
 
-include_once($php_base.'/web/php/auth.php');
-include_once($php_base.'/web/php/mustache.php');
+include_once($php_base.'/php/blockauth.php');
+include_once($php_base.'/php/mustache.php');
+include_once($php_base.'/php/parsedown.php');
 
-$auth = new bs_auth();
+$auth = new blockauth();
 $options['auth'] = $auth->user();
 $options['vars'] = $auth::$vars;
 
