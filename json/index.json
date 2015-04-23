@@ -1,5 +1,7 @@
 {
-    "title": "Self-Managed Authentication via Blockchains using Blockstrap",
+    "id": "blockauth",
+    "title": "BlockAuth | Self-Managed Authentication via Blockchain Technology",
+    "byline": "Self-Managed Authentication via Blockchain Technology",
     "css": [
         {
             "href": "css/bootstrap.css"

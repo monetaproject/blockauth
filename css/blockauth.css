@@ -34,7 +34,6 @@ p.credits {
     height: 100%;
     background: url(../img/loading.gif) no-repeat center center;
 }
-}
 
 /*
 
@@ -44,9 +43,20 @@ HEADERS
 h1.logo {
     display: block;
     position: relative;
+    width: 200px;
+    height: 60px;
+    text-indent: -999em;
+    background: url(../img/logo.png) no-repeat;
+    left: 50%;
+    margin: 20px 0 5px -100px;
+}
+h2.byline {
+    display: block;
+    position: relative;
     text-align: center;
-    padding: 20px;
-    font-size: 28px;
+    padding: 0 20px 20px;
+    font-size: 15px;
+    color: #757575;
 }
 
 /*
