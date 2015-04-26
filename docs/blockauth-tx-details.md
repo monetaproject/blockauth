@@ -35,6 +35,4 @@ When the hex value following the OP_RETURN is decoded, you should find the follo
 }
 ```
 
-The current capacity for this method is 80 Bytes, which is __fully__ utilized by the current implementation.
-
-This restriction of 80 bytes applies to blockchains from Bitcoin, Litecoin, Dogecoin and DashPay.
+The current capacity for this method is 80 bytes, which is the __fuly__ utilized by this current implementation. Please note that the length of the final password stored is dependent upon the length of the display name stored and the OP_RETURN limit of the relevant blockchain. Since some implementations have a 40 byte limit when sending to the mainnet, such cases would mean that even a name as short as __John Doe__ would only be able to store 18 characters from their hashed password onto the blockchain.
