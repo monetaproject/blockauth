@@ -1,6 +1,6 @@
-## Welcome to BlockAuth BETA
+## Welcome to BlockAuth
 
-BlockAuth provides a way for any individual to register their identity on a Blockchain.
+BlockAuth is __an early open-beta preview experiementing with blockchain authentication.__
 
 BlockAuth allows users and site owners to verify an identity without the need for an email address or other data you may wish to keep private. How much (or how little) of your identity you wish to reveal is up to you. 
 
