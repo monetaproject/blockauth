@@ -72,9 +72,9 @@ The `UID` should be returned to the user and a JSON string added to the `op_retu
 }
 ```
 
-Please note that the length of the final password stored is dependent upon the length of the display name stored.
+Please note that the length of the final password stored is dependent upon the length of the display name stored and the `OP_RETURN` limit of the relevant blockchain. Some implementations have a 40 byte limit, which would mean even a name as short as __John Doe__ would only be able to store 18 characters from their hashed password.
 
-Once the transaction has been completed the relevant `TXID` should also be returned to the user along with the `UID` and (optional) relevant blockchain as follows:
+Once the transaction has been confirmed, the relevant `TXID` should also be returned to the user along with the `UID`and blockchain:
 
 * __`UID`__ = 86e0ae3dfc5adf865b8ddbfe669fee1d2916ddda3e28ce83ed3ca489a0b6fd4b
 * __`PWID`__ (The Transaction ID) = 57068f4ffba9f08308ef2c2769f425233a68c11199e872336232d2a08e6a4e8f
@@ -82,36 +82,38 @@ Once the transaction has been completed the relevant `TXID` should also be retur
 
 -----
 
-#### DN-Key Specifications
+#### DNKey Specifications
 
-If remembering a `UID` and `PWID` (on-top of the actual password) is too much you can choose to use [DN-Keys](http://dnkey.org), which allow you to simply remember a username and password instead. By using publically available DNS TXT records you will reveal slightly more about who you are in the process.
+If remembering a `UID` and `PWID` (on-top of the actual password) is too much you can choose to use [DNKeys](http://dnkey.org), which allow you to simply remember a username and password instead. However, please note that by using publically available DNS TXT records to pair UIDs and PWIDs, you will also be revealing slightly more informtion about who you are in the process.
 
-A registration process that supports DN-Keys should also return something similar to this:
+When a registration process supporting DNKeys sends back the UID, PWID and Chain, it should also return the required value that the user would need to add to their DNS TXT records, which should look like this:
 
 <!--pre-html-->
 ```
-dnkey-blockauth-doget=86e0ae3dfc5adf865b8ddbfe669fee1d2916ddda3e28ce83ed3ca489a0b6fd4b_57068f4ffba9f08308ef2c2769f425233a68c11199e872336232d2a08e6a4e8f
+dnkey-blockauth-XXX=YYY_ZZZ
 ```
 
-Adding the above record to the DNS TXT record for `your-name.your-domain.com` sets that as your username. Having a username allows you to replace the need for remembering the `UID` and `PWID` and simply remember your sub-domain instead, which could be as simple as `bob.anything.com` for example.
+`XXX` represents the blockchain storing the credentials. `YYY` represents the UID and `ZZZ` represents the PWID.
+
+Adding the above record to the DNS TXT record for `name.domain.com` sets that as your username. Having a username allows you to replace the need for remembering the `UID` and `PWID` and simply remember your sub-domain instead.
 
 -----
 
 #### Authentication Specifications
 
-If the client __does not__ support DN-Keys, the required fields (otherwise ascertained from the DN-Key results) are as follows:
+If the client __does not__ support DNKeys, the required fields (otherwise ascertained from the DNKey results) are as follows:
 
 * UID
 * PWID
 * Blockchain
 * Password
 
-If the client __does__ supports [DN-Keys](http://dnkey.org) all you need to input is the following:
+If the client __does__ supports [DNKeys](http://dnkey.org) all you need to input is the following:
 
-* DN-Key
+* DNKey
 * Password
 
-The DN-Key contains the `UID`, `PWID` and selected Blockchain, e.g `btc`.
+The DNKey contains the `UID`, `PWID` and selected Blockchain, e.g `btc`.
 
 The `PWID` is the transaction ID from where the credentials are stored.
 
@@ -150,15 +152,15 @@ When the hex value following the OP_RETURN is decoded, you should find the follo
 }
 ```
 
-The current capacity for this method is 80 bytes, which is the __fuly__ utilized by the this implementation.
+The current capacity for this method is 80 bytes, which is the __fuly__ utilized by the this implementation. Please note that the length of the final password stored is dependent upon the length of the display name stored and the OP_RETURN limit of the relevant blockchain. 
 
-This restriction of 80 bytes applies to the Bitcoin, Litecoin, Dogecoin and DashPay blockchains. Other blockchains with less restrictions would allow for additional features. 
+Some implementations have a 40 byte limit, which would mean even a name as short as John Doe would only be able to store 18 characters from their hashed password.
 
 -----
 
 #### Why do we require a UID and PWID?
 
-The hashed password that is stored on the blockchain uses the `UID` as part of the hashing process, so you can't have that saved in the same location as the encoded transaction, else its at risk of random brute-forcing on any encoded transactions found. The use of the DN-Key allows you to store the `UID` in the same place that a reference to the hashed password can be found. Although this makes the process of remembering your credentials much easier, replacing the `UID` and `PWID` with a simple username also exposses the link between the `UID` and password.
+The hashed password that is stored on the blockchain uses the `UID` as part of the hashing process, so you can't have that saved in the same location as the encoded transaction, else its at risk of random brute-forcing on any encoded transactions found. The use of the DNKey allows you to store the `UID` in the same place that a reference to the hashed password can be found. Although this makes the process of remembering your credentials much easier, replacing the `UID` and `PWID` with a simple username also exposses the link between the `UID` and password.
 
 We are working on a new version of the specification which will leave this attack vector less vulnerable. Your ideas on making this possible are welcomed and encouraged.
 
