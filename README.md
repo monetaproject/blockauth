@@ -152,17 +152,13 @@ When the hex value following the OP_RETURN is decoded, you should find the follo
 }
 ```
 
-The current capacity for this method is 80 bytes, which is the __fuly__ utilized by the this implementation. Please note that the length of the final password stored is dependent upon the length of the display name stored and the OP_RETURN limit of the relevant blockchain. 
-
-Some implementations have a 40 byte limit, which would mean even a name as short as John Doe would only be able to store 18 characters from their hashed password.
+The current capacity for this method is 80 bytes, which is the __fuly__ utilized by this current implementation. Please note that the length of the final password stored is dependent upon the length of the display name stored and the OP_RETURN limit of the relevant blockchain. Since some implementations have a 40 byte limit when sending to the mainnet, such cases would mean that even a name as short as __John Doe__ would only be able to store 18 characters from their hashed password onto the blockchain.
 
 -----
 
 #### Why do we require a UID and PWID?
 
-The hashed password that is stored on the blockchain uses the `UID` as part of the hashing process, so you can't have that saved in the same location as the encoded transaction, else its at risk of random brute-forcing on any encoded transactions found. The use of the DNKey allows you to store the `UID` in the same place that a reference to the hashed password can be found. Although this makes the process of remembering your credentials much easier, replacing the `UID` and `PWID` with a simple username also exposses the link between the `UID` and password.
-
-We are working on a new version of the specification which will leave this attack vector less vulnerable. Your ideas on making this possible are welcomed and encouraged.
+The hashed password that is stored on the blockchain uses the `UID` as part of the hashing process, so you can't have that saved in the same location as the encoded transaction, else it is at risk of random brute-forcing on any encoded transactions found when pruning the public ledgers. The use of the DNKey allows you to store the `UID` in the same place that a reference to the hashed password can be found. Although this makes the process of remembering your credentials much easier, replacing the `UID` and `PWID` with a simple username also exposses the link between the `UID` and the password whilst also linking the registration of that domain to the UID. We are working on a new version of the specification which will leave this attack vector less vulnerable. Your ideas on making this possible are welcomed and encouraged.
 
 ## Examples & Demos
 
