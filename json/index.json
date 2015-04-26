@@ -1,7 +1,7 @@
 {
     "id": "blockauth",
-    "title": "BlockAuth | Authenticate Yourself via a Blockchain",
-    "byline": "Blockchain Identity Management",
+    "title": "BlockAuth | Self-Managed Blockchain Authentication",
+    "byline": "Self-Managed Blockchain Authentication",
     "css": [
         {
             "href": "css/bootstrap.css"
