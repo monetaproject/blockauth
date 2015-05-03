@@ -55,7 +55,7 @@ The private key belonging to the newly generated address is used to further hash
 var uid = bitcoin.crypto.sha256(private_key + uid).toString('hex');
 ```
 
-The final `UID` is then used to hash the password prior to it being encoded in the `op_return`:
+The final `UID` is then used to re-hash the password prior to it being encoded in the `op_return`:
 
 <!--pre-javascript-->
 ```
@@ -72,7 +72,9 @@ The `UID` should be returned to the user and a JSON string added to the `op_retu
 }
 ```
 
-Please note that the length of the final password stored is dependent upon the length of the display name stored and the `OP_RETURN` limit of the relevant blockchain. Some implementations have a 40 byte limit, which would mean even a name as short as __John Doe__ would only be able to store 18 characters from their hashed password.
+In all honesty, it is the UID that is the most __secure__ component to this method. The choice to expose it later through DNKeys drastically reduces the level of security (for now).
+
+Please note that the length of the final hashed password that is stored is dependent upon the length of the display name stored and the `OP_RETURN` limit of the relevant blockchain. Some implementations have a 40 byte limit, which would mean even a name as short as __John Doe__ would only be able to store 18 characters from their hashed password.
 
 Once the transaction has been confirmed, the relevant `TXID` should also be returned to the user along with the `UID`and blockchain:
 
