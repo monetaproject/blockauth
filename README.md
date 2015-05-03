@@ -172,7 +172,7 @@ Please also note that the [Blockstrap PHP SDK](https://github.com/blockstrap/blo
 
 __This is still an experiemental prototype and should not yet be used in production.__
 
-Over the coming days we will be working on a list of known flaws and logging our progress [via the public GitHub repo](https://github.com/Neuroware-IO/blockauth). 
+We will continue working on a list of known flaws and logging our progress [via the public GitHub repo](https://github.com/Neuroware-IO/blockauth). 
 
 ## More Information
 
