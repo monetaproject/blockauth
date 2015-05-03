@@ -2,7 +2,7 @@
 
 BlockAuth is __an early open-beta preview experiementing with blockchain authentication.__
 
-BlockAuth allows users and site owners to verify an identity without the need for an email address or other data you may wish to keep private. How much (or how little) of your identity you wish to reveal is up to you. 
+BlockAuth allows users and site owners to verify an identity without the need for an email address or other data that users may wish to keep private. How much (or how little) of your identity you wish to reveal is up to you. 
 
 BlockAuth is currently in an early beta state so would appreciate your feedback and contributions to improve the specification - as well as your understanding that this current prototype is not reflective of the final service or its potential. The code is open source and available to view, pull, and edit via our [public GitHub repository](https://github.com/Neuroware-IO/blockauth). Bug fixes and contributions from the community are very much welcomed. 
 
@@ -44,7 +44,7 @@ Please note that the salts for the demo below are currently set as follows:
 }
 ```
 
-This provides flexibility and some form of future-proofing to allow for either different version numbers of specifications and (or) external services to force indepednent registrations. Since the salts are stored server side, they are theoretically difficult to obtain and make brute forcing the password much more difficult.
+This provides flexibility and some form of future-proofing to allow for either different version numbers of specifications and (or) external services to force indepednent registrations. Since the salts are stored server side, they are theoretically difficult to obtain and make brute forcing the password much more difficult. They also allow for flexibility in design, as to whether or not different services can support the same users or not.
 
 When the hash is obtained we can use this client-side to generate a new address and periodically poll that address to ascertain whether it has any unspent transactions. The moment it does, all of the balance is returned to the recorded address and the login credentials are encoded into the `op_return` for that transaction.
 
